@@ -226,6 +226,7 @@ const Major = () => {
                   onChange={(e) => setFormData({ ...formData, majorName: e.target.value })}
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Nhập tên ngành..."
                 />
               </div>
               <div className="mb-4">

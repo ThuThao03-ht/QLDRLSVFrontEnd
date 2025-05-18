@@ -436,7 +436,7 @@ const handleAddStudent = () => {
             <div className="grid grid-cols-2 gap-4">
   <input
     type="text"
-    placeholder="idStudent"
+    placeholder="Id sinh viên"
     value={newStudent.idStudent}
     onChange={(e) => setNewStudent({ ...newStudent, idStudent: e.target.value })}
     disabled={!isEditMode}
@@ -445,7 +445,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="fullName"
+    placeholder="Nhập tên sinh viên..."
     value={newStudent.fullName}
     onChange={(e) => setNewStudent({ ...newStudent, fullName: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -471,7 +471,7 @@ const handleAddStudent = () => {
 
 <input
   type="text"
-  placeholder="majorId"
+  placeholder="Nhập id ngành..."
   value={newStudent.majorId}
   onChange={(e) => setNewStudent({ ...newStudent, majorId: e.target.value })}
   className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -479,7 +479,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="className"
+    placeholder="Nhập lớp..."
     value={newStudent.className}
     onChange={(e) => setNewStudent({ ...newStudent, className: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -487,7 +487,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="address"
+    placeholder="Nhập địa chỉ..."
     value={newStudent.address}
     onChange={(e) => setNewStudent({ ...newStudent, address: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -495,7 +495,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="ethnicity"
+    placeholder="Nhập dân tộc..."
     value={newStudent.ethnicity}
     onChange={(e) => setNewStudent({ ...newStudent, ethnicity: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -503,7 +503,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="nationality"
+    placeholder="Nhập quốc tịch..."
     value={newStudent.nationality}
     onChange={(e) => setNewStudent({ ...newStudent, nationality: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -511,7 +511,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="phoneNumber"
+    placeholder="Nhập số điện thoại..."
     value={newStudent.phoneNumber}
     onChange={(e) => setNewStudent({ ...newStudent, phoneNumber: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -519,7 +519,7 @@ const handleAddStudent = () => {
 
   <input
     type="text"
-    placeholder="email"
+    placeholder="Nhập email..."
     value={newStudent.email}
     onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
     className="border border-gray-300 px-4 py-2 rounded w-full"
@@ -528,7 +528,7 @@ const handleAddStudent = () => {
   {/* Trường hợp user.userId và user.userName */}
   <input
     type="text"
-    placeholder="userId"
+    placeholder="Nhập id tài khoản (nếu có)..."
     value={newStudent.user?.userId || ""}
     onChange={(e) =>
       setNewStudent({

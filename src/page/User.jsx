@@ -166,6 +166,7 @@ const User = () => {
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
                   required
+                  placeholder="Nhập tên người dùng..."
                 />
               </div>
 
@@ -181,6 +182,7 @@ const User = () => {
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
                   required
+                  placeholder="Nhập email người dùng..."
                 />
               </div>
 
@@ -196,6 +198,7 @@ const User = () => {
                   onChange={handleInputChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
                   required
+                  placeholder="Nhập mật khẩu..."
                 />
               </div>
 
