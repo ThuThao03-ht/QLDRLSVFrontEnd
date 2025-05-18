@@ -145,18 +145,62 @@ const Student = () => {
     fetchStudents();
   };
 
-  const handleAddStudent = () => {
-    axios.post('http://localhost:8080/admin/student/add', newStudent)
-      .then(() => {
-        toast.success('Thêm sinh viên thành công!', { position: "top-center", autoClose: 1000 });
-        setShowModal(false);
-        fetchStudents(currentPage);
-        resetForm();
-      })
-      .catch(() => {
-        toast.error('Thêm sinh viên thất bại!', { position: "top-center", autoClose: 1000 });
+  // const handleAddStudent = () => {
+  //   axios.post('http://localhost:8080/admin/student/add', newStudent)
+  //     .then(() => {
+  //       toast.success('Thêm sinh viên thành công!', { position: "top-center", autoClose: 1000 });
+  //       setShowModal(false);
+  //       fetchStudents(currentPage);
+  //       resetForm();
+  //     })
+  //     .catch(() => {
+  //       toast.error('Thêm sinh viên thất bại!', { position: "top-center", autoClose: 1000 });
+  //     });
+  // };
+const handleAddStudent = () => {
+  const { phoneNumber, email } = newStudent;
+
+  // Kiểm tra số điện thoại (phải có đúng 10 chữ số)
+  const isPhoneValid = /^\d{10}$/.test(phoneNumber);
+
+  // Kiểm tra định dạng email
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (!isPhoneValid) {
+    toast.error('Số điện thoại phải gồm đúng 10 chữ số!', {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    return;
+  }
+
+  if (!isEmailValid) {
+    toast.error('Email không đúng định dạng!', {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    return;
+  }
+
+  // Nếu hợp lệ, gửi request thêm sinh viên
+  axios.post('http://localhost:8080/admin/student/add', newStudent)
+    .then(() => {
+      toast.success('Thêm sinh viên thành công!', {
+        position: "top-center",
+        autoClose: 1000,
       });
-  };
+      setShowModal(false);
+      fetchStudents(currentPage);
+      resetForm();
+    })
+    .catch(() => {
+      toast.error('Thêm sinh viên thất bại!', {
+        position: "top-center",
+        autoClose: 1000,
+      });
+    });
+};
+
 
   const handleUpdateStudent = () => {
     axios.put(`http://localhost:8080/admin/student/update/${newStudent.idStudent}`, newStudent)
@@ -257,7 +301,7 @@ const Student = () => {
       onClick={handleResetSearch}
       className="min-w-[120px] bg-gray-300 text-black px-4 py-2 rounded-lg hover:bg-gray-400 transition"
     >
-      Reset
+      Làm mới
     </button>
     <button
       onClick={() => {
@@ -370,7 +414,7 @@ const Student = () => {
                 </div>
             
             <h2 className="text-2xl font-semibold text-blue-600 mb-6 text-center"></h2>
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               {Object.keys(newStudent).map((key, i) => (
                 <input
                   key={i}
@@ -387,7 +431,128 @@ const Student = () => {
                   className="border border-gray-300 px-4 py-2 rounded w-full"
                 />
               ))}
-            </div>
+            </div> */}
+
+            <div className="grid grid-cols-2 gap-4">
+  <input
+    type="text"
+    placeholder="idStudent"
+    value={newStudent.idStudent}
+    onChange={(e) => setNewStudent({ ...newStudent, idStudent: e.target.value })}
+    disabled={!isEditMode}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="fullName"
+    value={newStudent.fullName}
+    onChange={(e) => setNewStudent({ ...newStudent, fullName: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="date"
+    placeholder="birthDay"
+    value={newStudent.birthDay}
+    onChange={(e) => setNewStudent({ ...newStudent, birthDay: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="sex"
+    value={newStudent.sex}
+    onChange={(e) =>
+      setNewStudent({ ...newStudent, sex: e.target.value === 'true' })
+    }
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+<input
+  type="text"
+  placeholder="majorId"
+  value={newStudent.majorId}
+  onChange={(e) => setNewStudent({ ...newStudent, majorId: e.target.value })}
+  className="border border-gray-300 px-4 py-2 rounded w-full"
+/>
+
+  <input
+    type="text"
+    placeholder="className"
+    value={newStudent.className}
+    onChange={(e) => setNewStudent({ ...newStudent, className: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="address"
+    value={newStudent.address}
+    onChange={(e) => setNewStudent({ ...newStudent, address: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="ethnicity"
+    value={newStudent.ethnicity}
+    onChange={(e) => setNewStudent({ ...newStudent, ethnicity: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="nationality"
+    value={newStudent.nationality}
+    onChange={(e) => setNewStudent({ ...newStudent, nationality: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="phoneNumber"
+    value={newStudent.phoneNumber}
+    onChange={(e) => setNewStudent({ ...newStudent, phoneNumber: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  <input
+    type="text"
+    placeholder="email"
+    value={newStudent.email}
+    onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  {/* Trường hợp user.userId và user.userName */}
+  <input
+    type="text"
+    placeholder="userId"
+    value={newStudent.user?.userId || ""}
+    onChange={(e) =>
+      setNewStudent({
+        ...newStudent,
+        user: { ...newStudent.user, userId: e.target.value },
+      })
+    }
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  />
+
+  {/* <input
+    type="text"
+    placeholder="userName"
+    value={newStudent.user?.userName || ""}
+    onChange={(e) =>
+      setNewStudent({
+        ...newStudent,
+        user: { ...newStudent.user, userName: e.target.value },
+      })
+    }
+    className="border border-gray-300 px-4 py-2 rounded w-full"
+  /> */}
+</div>
+
             <div className="flex justify-end mt-6">
               <button onClick={() => setShowModal(false)} className="mr-4 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Hủy</button>
               <button

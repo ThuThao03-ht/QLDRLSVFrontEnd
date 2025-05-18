@@ -37,23 +37,119 @@ const TrainingPoint = () => {
     fetchTrainingPoints();
   }, []);
 
-  const fetchTrainingPoints = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:8080/admin/trainingpoint/all');
-      const data = response.data.content || [];
-      setTrainingPoints(data);
-      const years = [...new Set(data.map(item => item.academicYear))];
-      setAcademicYears(years);
-      const semesterList = [...new Set(data.map(item => item.semester))];
-      setSemesters(semesterList);
-      setCurrentPage(1);
-    } catch (error) {
-      console.error('Error fetching training points:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchTrainingPoints = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get('http://localhost:8080/admin/trainingpoint/all');
+  //     const data = response.data.content || [];
+  //     setTrainingPoints(data);
+  //     const years = [...new Set(data.map(item => item.academicYear))];
+  //     setAcademicYears(years);
+  //     const semesterList = [...new Set(data.map(item => item.semester))];
+  //     setSemesters(semesterList);
+  //     setCurrentPage(1);
+  //   } catch (error) {
+  //     console.error('Error fetching training points:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+//   const fetchTrainingPoints = async () => {
+//   setLoading(true);
+//   try {
+//     // Gọi song song 2 API: điểm rèn luyện và danh sách sinh viên
+//     const [trainingRes, studentRes] = await Promise.all([
+//       axios.get('http://localhost:8080/admin/trainingpoint/all'),
+//       axios.get('http://localhost:8080/admin/student/all')
+//     ]);
+
+//     const trainingData = trainingRes.data.content || [];
+//     const students = studentRes.data.content || [];
+
+//     // Lấy danh sách maSV đang tồn tại
+//     const existingMaSVs = new Set(students.map(student => student.maSV));
+
+//     // Lọc ra các điểm rèn luyện có maSV còn tồn tại
+//     const filteredTrainingData = trainingData.filter(item => existingMaSVs.has(item.maSV));
+
+//     setTrainingPoints(filteredTrainingData);
+
+//     // Lấy danh sách năm học và học kỳ từ dữ liệu đã lọc
+//     const years = [...new Set(filteredTrainingData.map(item => item.academicYear))];
+//     const semesterList = [...new Set(filteredTrainingData.map(item => item.semester))];
+
+//     setAcademicYears(years);
+//     setSemesters(semesterList);
+//     setCurrentPage(1);
+//   } catch (error) {
+//     console.error('Error fetching training points or students:', error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+const fetchTrainingPoints = async () => {
+  setLoading(true);
+  try {
+    const response = await axios.get('http://localhost:8080/admin/trainingpoint/all');
+    const trainingData = response.data.content || [];
+
+    // Không cần lọc theo isDelete nữa
+    setTrainingPoints(trainingData);
+
+    const years = [...new Set(trainingData.map(item => item.academicYear))];
+    const semesterList = [...new Set(trainingData.map(item => item.semester))];
+
+    setAcademicYears(years);
+    setSemesters(semesterList);
+    setCurrentPage(1);
+  } catch (error) {
+    console.error('Error fetching training points:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+// const fetchTrainingPoints = async () => {
+//   setLoading(true);
+//   try {
+//     // Gọi API lấy toàn bộ điểm rèn luyện và sinh viên
+//     const [trainingRes, studentRes] = await Promise.all([
+//       axios.get('http://localhost:8080/admin/trainingpoint/all'),
+//       axios.get('http://localhost:8080/admin/student/all')
+//     ]);
+
+//     // Dữ liệu điểm rèn luyện
+//     const trainingData = trainingRes.data.content || [];
+
+//     // Dữ liệu sinh viên và lọc sinh viên chưa bị xóa
+//     const students = (studentRes.data.content || []).filter(student => student.isDelete === false);
+
+//     // Tạo tập hợp các maSV hợp lệ (chưa bị xóa)
+//     const existingMaSVs = new Set(students.map(student => student.idstudent));
+
+//     // Lọc điểm rèn luyện chỉ của sinh viên chưa bị xóa
+//     const filteredTrainingData = trainingData.filter(item => existingMaSVs.has(item.idstudent));
+
+//     // Cập nhật state điểm rèn luyện
+//     setTrainingPoints(filteredTrainingData);
+
+//     // Lấy danh sách năm học và học kỳ từ dữ liệu đã lọc
+//     const years = [...new Set(filteredTrainingData.map(item => item.academicYear))];
+//     const semesterList = [...new Set(filteredTrainingData.map(item => item.semester))];
+
+//     // Cập nhật state
+//     setAcademicYears(years);
+//     setSemesters(semesterList);
+//     setCurrentPage(1);
+//   } catch (error) {
+//     console.error('Error fetching training points or students:', error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
 
   const handleSearchByYear = async (year) => {
     setSelectedYear(year);
@@ -287,7 +383,7 @@ const resetFormData = () => {
           onClick={handleResetSearch}
           className="px-6 py-2 bg-gray-300 text-black font-medium rounded-lg hover:bg-gray-400 transition"
         >
-          Reset
+          Làm mới
         </button>
       </div>
 
@@ -420,7 +516,7 @@ const resetFormData = () => {
   />
   <input
     type="number"
-    placeholder="Tổng điểm (ví dụ 0->100)"
+    placeholder="Tổng điểm (ví dụ 0-100)"
     className="w-full border px-3 py-2 rounded"
     value={newPoint.totalPoint}
     onChange={(e) => setNewPoint({ ...newPoint, totalPoint: e.target.value })}
